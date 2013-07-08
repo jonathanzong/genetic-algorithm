@@ -50,12 +50,6 @@ def cost_function(assignments):
 			max_index = index
 	return cost + index
 
-# ensure all choice assignments are unique
-# if we do it right, not really necessary to check
-# def valid_soln(assignment):
-#	soln = set(assignment.values())
-#	return len(soln) == k
-
 def seed_ga(g_size):
 	# randomly generate seed generation by shuffling
 	# choices and assigning them to students in order
