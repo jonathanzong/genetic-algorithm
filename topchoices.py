@@ -1,6 +1,6 @@
 # explanation found at http://jonathanzong.com/blog/2013/07/08/optimizing-top-choices-with-genetic-algorithm
 
-import random
+import random, math
 from copy import deepcopy
 from sys import maxint
 
@@ -37,13 +37,18 @@ for x in range(k):
 	student_set.append(Student(chr(x+65), random.sample(choice_set,n)))
 
 # sum the indices of the choices assigned to a student
+# penalize additionally by highest index, for fairness
 def cost_function(assignments):
+	#cost = sum_indices(assignments)
 	cost = 0
-	for x in range(k):
-		student = student_set[x]
+	max_index = 0
+	for student in student_set:
 		choice = assignments[student]
-		cost += student.get_rank(choice)
-	return cost
+		index = student.get_rank(choice)
+		cost += index
+		if index > max_index:
+			max_index = index
+	return cost + index
 
 # ensure all choice assignments are unique
 # if we do it right, not really necessary to check
@@ -72,11 +77,11 @@ def genetic_algo(generation, n_iter):
 		# keep the top half (best solutions move onto the next generation)
 		# mutate the best solutions by introducing random swaps in assignment
 		generation[g_size/2:] = deepcopy(generation[:g_size/2])
-		for i in range(g_size/2, g_size):
+		for candidate in generation[g_size/2 : g_size]:
 			swaps = random.sample(student_set,2)
-			temp = generation[i][swaps[0]]
-			generation[i][swaps[0]] = generation[i][swaps[1]]
-			generation[i][swaps[1]] = temp
+			temp = candidate[swaps[0]]
+			candidate[swaps[0]] = candidate[swaps[1]]
+			candidate[swaps[1]] = temp
 	return generation[0]
 
 # run GA multiple times to combat convergence to local optima
@@ -93,3 +98,5 @@ for x in range(10):
 
 print 'Best solution: ', best_assignment
 print 'Minimized Cost: ', best_score
+for key in best_assignment:
+	print key, ' got choice ', key.get_rank(best_assignment[key])
