@@ -99,4 +99,4 @@ for x in range(10):
 print 'Best solution: ', best_assignment
 print 'Minimized Cost: ', best_score
 for key in best_assignment:
-	print key, ' got choice ', key.get_rank(best_assignment[key])
+	print key, ' got index ', key.get_rank(best_assignment[key])
