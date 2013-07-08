@@ -1,3 +1,5 @@
+# explanation found at http://jonathanzong.com/blog/2013/07/08/optimizing-top-choices-with-genetic-algorithm
+
 import random
 from copy import deepcopy
 from sys import maxint
