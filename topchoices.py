@@ -48,7 +48,7 @@ def cost_function(assignments):
 		cost += index
 		if index > max_index:
 			max_index = index
-	return cost + index
+	return cost + max_index
 
 def seed_ga(g_size):
 	# randomly generate seed generation by shuffling
